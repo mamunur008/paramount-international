@@ -1,0 +1,16 @@
+@import "tailwindcss";
+@theme {
+  --color-paramount-navy: #071d3d; --color-paramount-blue: #123965; --color-paramount-gold: #c58b1b;
+  --color-paramount-ivory: #f5f1e8; --color-paramount-ink: #142231;
+  --font-sans: "Inter", "Segoe UI", Arial, Helvetica, sans-serif;
+}
+:root { color-scheme: light; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: white; color: #142231; font-family: var(--font-sans); }
+::selection { background: #d9a936; color: #06182c; }
+.eyebrow { font-size: .75rem; font-weight: 800; letter-spacing: .25em; text-transform: uppercase; color: #b57b10; }
+.section-title { margin-top: 1rem; max-width: 44rem; font-size: clamp(2.25rem,5vw,4.5rem); font-weight: 900; line-height: 1.02; letter-spacing: -.04em; color: #071b33; }
+.section-copy { margin-top: 1.5rem; max-width: 38rem; font-size: 1.08rem; line-height: 1.9; color: #5c6a78; }
+.field { display: grid; gap: .55rem; font-size: .8rem; font-weight: 700; color: #071b33; }
+.field input,.field select,.field textarea { width: 100%; border: 1px solid #d8e0e7; border-radius: .9rem; padding: .9rem 1rem; background: #f8fafc; font-size: .9rem; font-weight: 400; outline: none; }
+.field input:focus,.field select:focus,.field textarea:focus { border-color: #d9a936; box-shadow: 0 0 0 3px rgb(217 169 54 / .12); }
