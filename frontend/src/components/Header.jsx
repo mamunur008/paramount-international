@@ -11,7 +11,7 @@ export const Logo = ({ className = "" }) => (
     aria-label="Paramount International home"
     className={`inline-flex items-baseline gap-1.5 leading-none select-none whitespace-nowrap ${className}`}
   >
-    <span className="text-[20px] sm:text-[22px] font-bold tracking-tight">Paramount</span>
+    <span className="text-[20px] sm:text-[22px] font-bold tracking-tight">Paramount</span>{" "}
     <span className="text-[20px] sm:text-[22px] font-light tracking-tight">International</span>
   </Link>
 );

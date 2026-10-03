@@ -25,7 +25,7 @@ export default function Accordion({ items, defaultOpen = 0, testId = "accordion"
                 className={`absolute right-5 lg:right-[30px] top-1/2 -translate-y-1/2 transition-transform duration-300 ${isOpen ? "rotate-45" : ""}`}
               />
             </button>
-            <div className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
+            <div aria-hidden={!isOpen} className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
               <div className="overflow-hidden">
                 <div className="bg-c-accent border-t border-white/10 text-white px-5 lg:px-[30px] py-4 lg:py-5 leading-[1.7]" data-testid={`${testId}-content-${i}`}>
                   {f.a}

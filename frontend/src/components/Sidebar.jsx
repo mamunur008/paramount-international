@@ -45,7 +45,7 @@ export const CtaBox = () => (
     <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full bg-c-accent/30 blur-[80px]" aria-hidden="true" />
     <div className="relative">
       <span className="inline-flex items-baseline gap-1 text-white mb-8 lg:mb-10">
-        <span className="font-bold">Paramount</span>
+        <span className="font-bold">Paramount</span>{" "}
         <span className="font-light">International</span>
       </span>
       <div className="border-b border-white/10 pb-5 mb-5">
