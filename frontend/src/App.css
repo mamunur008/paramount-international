@@ -1,0 +1,87 @@
+.App {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.container-c {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+.section-pad {
+  padding-top: 7rem;
+  padding-bottom: 7rem;
+}
+
+@media (max-width: 768px) {
+  .section-pad {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: capitalize;
+  color: #c6f934;
+}
+.eyebrow::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #c6f934;
+  box-shadow: 0 0 10px #c6f934;
+}
+
+.section-title {
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: #f4f6f1;
+  font-size: clamp(1.9rem, 4vw, 3.1rem);
+}
+
+.btn-lime {
+  background: #c6f934;
+  color: #0a0b0a;
+  font-weight: 600;
+  border-radius: 999px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+.btn-lime:hover {
+  background: #d4ff52;
+  box-shadow: 0 10px 30px rgba(198, 249, 52, 0.3);
+  transform: translateY(-2px);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #f4f6f1;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 999px;
+  transition: all 0.25s ease;
+}
+.btn-ghost:hover {
+  border-color: #c6f934;
+  color: #c6f934;
+}
+
+.card-dark {
+  background: #101210;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 1.25rem;
+  transition: transform 0.35s ease, border-color 0.35s ease, background 0.35s ease;
+}
+.card-dark:hover {
+  transform: translateY(-6px);
+  border-color: rgba(198, 249, 52, 0.4);
+  background: #141712;
+}
