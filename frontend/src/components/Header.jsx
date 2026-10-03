@@ -1,92 +1,111 @@
 import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Phone } from "lucide-react";
-import { NAV_LINKS } from "../mock";
+import { NAV_LINKS, BRAND } from "../mock";
+import ThemeToggle from "./ThemeToggle";
 
-const Logo = () => (
-  <a href="#home" className="flex items-center gap-2 select-none">
-    <span className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-[#c6f934] text-[#0a0b0a] font-extrabold text-lg">
-      {"</>"}
-    </span>
-    <span className="text-2xl font-extrabold tracking-tight text-white">
-      codeio
-    </span>
-  </a>
+export const Logo = ({ className = "" }) => (
+  <Link
+    to="/"
+    data-testid="site-logo"
+    aria-label="Paramount International home"
+    className={`inline-flex items-baseline gap-1.5 leading-none select-none whitespace-nowrap ${className}`}
+  >
+    <span className="text-[20px] sm:text-[22px] font-bold tracking-tight">Paramount</span>
+    <span className="text-[20px] sm:text-[22px] font-light tracking-tight">International</span>
+  </Link>
 );
+
+const navId = (label) => `nav-${label.toLowerCase().replace(/\s+/g, "-")}`;
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30);
-    window.addEventListener("scroll", onScroll);
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => setOpen(false), [pathname, hash]);
+
+  const current = `${pathname}${hash}`;
+  const isActive = (href) => (href === "/" ? current === "/" : current === href);
+
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-[#0a0b0a]/90 backdrop-blur-md border-b border-white/10 py-3"
-          : "bg-transparent py-5"
+      data-testid="site-header"
+      className={`fixed left-0 right-0 top-0 z-50 text-white transition-all duration-300 ${
+        scrolled ? "py-3 bg-[var(--c-header)] backdrop-blur-xl border-b border-white/10 lg:rounded-b-[20px]" : "py-5 lg:py-[30px] lg:mt-5"
       }`}
     >
-      <div className="container-c flex items-center justify-between">
+      <div className="container-c flex items-center justify-between gap-6">
         <Logo />
 
-        <nav className="hidden lg:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center" data-testid="desktop-nav">
           {NAV_LINKS.map((l) => (
-            <a
+            <Link
               key={l.label}
-              href={l.href}
-              className="text-sm font-medium text-gray-300 hover:text-[#c6f934] transition-colors duration-200"
+              to={l.href}
+              data-testid={navId(l.label)}
+              className={`px-[15px] py-2 text-[16px] font-medium capitalize transition-colors duration-300 hover:text-c-accent ${
+                isActive(l.href) ? "text-c-accent" : "text-white"
+              }`}
             >
               {l.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
-        <div className="hidden lg:flex items-center gap-4">
-          <a href="tel:123456789" className="flex items-center gap-2 text-sm text-gray-300">
-            <span className="inline-flex items-center justify-center w-9 h-9 rounded-full border border-white/15">
-              <Phone size={15} className="text-[#c6f934]" />
+        <div className="hidden lg:flex items-center gap-5">
+          <ThemeToggle />
+          <a href={BRAND.phoneHref} className="flex items-center gap-3 text-sm group" data-testid="header-phone">
+            <span className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-c-accent transition-colors">
+              <Phone size={16} />
             </span>
             <span>
-              <span className="block text-[11px] text-gray-500">Call us now</span>
-              <span className="font-semibold text-white">(123) 456 789</span>
+              <span className="block text-[11px] text-white/60 uppercase tracking-wider">Call us now</span>
+              <span className="font-semibold">{BRAND.phone}</span>
             </span>
           </a>
-          <a href="#contact" className="btn-lime px-6 py-3 text-sm">
+          <Link to="/#contact" className="btn-default" data-testid="header-cta">
             Get a Free Quote
-          </a>
+          </Link>
         </div>
 
-        <button
-          className="lg:hidden text-white p-2"
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle menu"
-        >
-          {open ? <X size={26} /> : <Menu size={26} />}
-        </button>
+        <div className="flex lg:hidden items-center gap-3">
+          <ThemeToggle />
+          <button
+            data-testid="mobile-menu-toggle"
+            onClick={() => setOpen((o) => !o)}
+            aria-label="Toggle menu"
+            aria-expanded={open}
+            className="w-[38px] h-[38px] rounded-lg bg-c-accent text-white flex items-center justify-center"
+          >
+            {open ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </div>
 
-      {/* Mobile menu */}
       {open && (
-        <div className="lg:hidden mt-3 mx-4 rounded-2xl bg-[#101210] border border-white/10 p-5">
-          <nav className="flex flex-col gap-1">
+        <div data-testid="mobile-menu" className="lg:hidden mt-4 mx-4 rounded-[20px] bg-c-accent p-3 shadow-2xl animate-fadein">
+          <nav className="flex flex-col">
             {NAV_LINKS.map((l) => (
-              <a
+              <Link
                 key={l.label}
-                href={l.href}
-                onClick={() => setOpen(false)}
-                className="py-3 px-2 text-gray-200 hover:text-[#c6f934] border-b border-white/5 transition-colors"
+                to={l.href}
+                data-testid={`mobile-${navId(l.label)}`}
+                className="px-5 py-3 text-white font-medium capitalize rounded-xl hover:bg-white/10 transition-colors"
               >
                 {l.label}
-              </a>
+              </Link>
             ))}
-            <a href="#contact" onClick={() => setOpen(false)} className="btn-lime px-6 py-3 text-sm mt-4 text-center">
+            <Link to="/#contact" className="mt-2 mx-2 mb-1 text-center rounded-xl bg-white text-[#090915] py-3 font-semibold" data-testid="mobile-cta">
               Get a Free Quote
-            </a>
+            </Link>
           </nav>
         </div>
       )}

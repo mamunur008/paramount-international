@@ -1,48 +1,26 @@
 import React from "react";
-import { ArrowUpRight } from "lucide-react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "./ui/accordion";
+import { Link } from "react-router-dom";
+import Accordion from "./Accordion";
 import { FAQS } from "../mock";
 
 export default function FAQ() {
   return (
-    <section className="section-pad relative">
-      <div className="container-c">
-        <div className="grid lg:grid-cols-5 gap-12">
-          <div className="lg:col-span-2 reveal">
-            <span className="eyebrow mb-5">{FAQS.eyebrow}</span>
-            <h2 className="section-title mt-5">{FAQS.title}</h2>
-            <p className="mt-6 text-gray-400 leading-relaxed">{FAQS.desc}</p>
-            <a href="#contact" className="btn-lime px-7 py-3.5 mt-8 inline-flex items-center gap-2">
-              View all FAQs <ArrowUpRight size={18} />
-            </a>
+    <section data-testid="faq-section" className="section-pad">
+      <div className="container-c grid lg:grid-cols-2 gap-10 lg:gap-[60px]">
+        <div className="lg:sticky lg:top-[100px] self-start reveal">
+          <span className="eyebrow">{FAQS.eyebrow}</span>
+          <h2 className="title-h2 mt-[10px]" data-cursor="-opaque">
+            {FAQS.title}
+          </h2>
+          <p className="mt-5 m-0 text-c-text/80">{FAQS.desc}</p>
+          <div className="mt-8 lg:mt-10">
+            <Link to="/#contact" className="btn-default" data-testid="faq-cta">
+              view all FAQs
+            </Link>
           </div>
-
-          <div className="lg:col-span-3 reveal">
-            <Accordion type="single" collapsible defaultValue="item-0" className="space-y-4">
-              {FAQS.items.map((f, i) => (
-                <AccordionItem
-                  key={i}
-                  value={`item-${i}`}
-                  className="card-dark px-6 border !border-white/8 data-[state=open]:!border-[#c6f934]/40"
-                >
-                  <AccordionTrigger className="text-left text-white font-semibold hover:no-underline py-5 text-base">
-                    <span>
-                      <span className="text-[#c6f934] mr-3">{String(i + 1).padStart(2, "0")}.</span>
-                      {f.q}
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="text-gray-400 leading-relaxed pb-5">
-                    {f.a}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
+        </div>
+        <div className="reveal">
+          <Accordion items={FAQS.items} testId="faq" />
         </div>
       </div>
     </section>

@@ -1,35 +1,46 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
-import { PROJECTS, IMAGES } from "../mock";
+import { PROJECTS } from "../mock";
+
+export const ProjectCard = ({ p, delay = 0 }) => (
+  <div className="group reveal" data-testid={`project-card-${p.slug}`} style={{ transitionDelay: `${delay}s` }}>
+    <Link to={`/projects/${p.slug}`} data-cursor-text="View" className="relative block rounded-[20px] lg:rounded-[30px] overflow-hidden mb-5 lg:mb-[25px]">
+      <img src={p.image} alt={p.title} className="w-full aspect-[1/0.84] object-cover transition-transform duration-500 group-hover:scale-[1.08]" />
+      <span className="absolute top-[60%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60px] h-[60px] lg:w-20 lg:h-20 rounded-full bg-c-accent text-white flex items-center justify-center opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:top-1/2 transition-all duration-300">
+        <ArrowUpRight size={24} />
+      </span>
+    </Link>
+    <div className="px-1 lg:px-5">
+      <ul className="flex flex-wrap gap-x-5 gap-y-2.5 mb-4 lg:mb-5">
+        {p.tags.map((t) => (
+          <li key={t} className="relative pl-[15px] text-c-text/80 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-2 before:h-2 before:rounded-full before:bg-c-accent">
+            {t}
+          </li>
+        ))}
+      </ul>
+      <h3 className="text-lg lg:text-xl font-medium text-c-primary">
+        <Link to={`/projects/${p.slug}`} className="hover:text-c-accent transition-colors">
+          {p.title}
+        </Link>
+      </h3>
+    </div>
+  </div>
+);
 
 export default function Projects() {
   return (
-    <section id="projects" className="section-pad relative bg-[#0c0e0c]">
+    <section id="projects" data-testid="projects-section" className="section-pad section-alt bg-c-alt">
       <div className="container-c">
-        <div className="text-center max-w-3xl mx-auto reveal">
-          <span className="eyebrow mb-5 justify-center">{PROJECTS.eyebrow}</span>
-          <h2 className="section-title mt-5">{PROJECTS.title}</h2>
+        <div className="max-w-[1000px] mx-auto text-center reveal mb-10 lg:mb-20">
+          <span className="eyebrow">{PROJECTS.eyebrow}</span>
+          <h2 className="title-h2 mt-[10px]" data-cursor="-opaque">
+            {PROJECTS.title}
+          </h2>
         </div>
-
-        <div className="mt-14 grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-[30px]">
           {PROJECTS.items.map((p, i) => (
-            <div key={i} className="group reveal">
-              <div className="relative rounded-3xl overflow-hidden h-[320px]">
-                <img src={IMAGES.projects[i]} alt={p.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0b0a] via-[#0a0b0a]/20 to-transparent" />
-                <a href="#contact" className="absolute top-5 right-5 w-11 h-11 rounded-full bg-[#c6f934] text-[#0a0b0a] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                  <ArrowUpRight size={20} />
-                </a>
-                <div className="absolute bottom-6 left-6 right-6">
-                  <span className="inline-block text-xs font-semibold px-3 py-1 rounded-full bg-[#c6f934]/15 text-[#c6f934] border border-[#c6f934]/30 mb-3">
-                    {p.tag}
-                  </span>
-                  <h3 className="text-xl font-semibold text-white leading-snug group-hover:text-[#c6f934] transition-colors">
-                    {p.title}
-                  </h3>
-                </div>
-              </div>
-            </div>
+            <ProjectCard key={p.slug} p={p} delay={i * 0.1} />
           ))}
         </div>
       </div>

@@ -1,11 +1,24 @@
 import React, { useState } from "react";
-import { Phone, Mail, ArrowUpRight, Star } from "lucide-react";
-import { JOIN, IMAGES } from "../mock";
+import { Phone, Mail, Star } from "lucide-react";
+import { JOIN, ABOUT } from "../mock";
 import { useToast } from "../hooks/use-toast";
+
+const ContactItem = ({ Icon, item, testId }) => (
+  <a href={item.href} className="flex items-center gap-4 group" data-testid={testId}>
+    <span className="w-[60px] h-[60px] shrink-0 rounded-full bg-c-accent text-white flex items-center justify-center transition-colors group-hover:bg-white group-hover:text-[#090915]">
+      <Icon size={22} />
+    </span>
+    <span>
+      <h3 className="text-xl font-medium text-white mb-1">{item.label}</h3>
+      <p className="m-0 text-white/80 group-hover:text-white transition-colors">{item.value}</p>
+    </span>
+  </a>
+);
 
 export default function Join() {
   const { toast } = useToast();
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
 
   const submit = (e) => {
     e.preventDefault();
@@ -18,75 +31,41 @@ export default function Join() {
   };
 
   return (
-    <section id="contact" className="section-pad relative">
-      <div className="container-c">
-        <div className="rounded-[2rem] bg-[#101210] border border-white/8 p-8 md:p-14 grid lg:grid-cols-2 gap-12 items-center relative overflow-hidden">
-          <div className="absolute -top-32 -right-20 w-96 h-96 rounded-full bg-[#c6f934]/10 blur-[120px]" />
-          <div className="relative z-10 reveal">
-            <span className="eyebrow mb-5">{JOIN.eyebrow}</span>
-            <h2 className="section-title mt-5">{JOIN.title}</h2>
-
-            <div className="mt-10 space-y-5">
-              <a href={JOIN.contact.href} className="flex items-center gap-4 group">
-                <span className="w-12 h-12 rounded-full bg-[#c6f934]/10 text-[#c6f934] flex items-center justify-center group-hover:bg-[#c6f934] group-hover:text-[#0a0b0a] transition-colors">
-                  <Phone size={20} />
-                </span>
-                <span>
-                  <span className="block text-xs text-gray-500">{JOIN.contact.label}</span>
-                  <span className="font-semibold text-white">{JOIN.contact.value}</span>
-                </span>
-              </a>
-              <a href={JOIN.email.href} className="flex items-center gap-4 group">
-                <span className="w-12 h-12 rounded-full bg-[#c6f934]/10 text-[#c6f934] flex items-center justify-center group-hover:bg-[#c6f934] group-hover:text-[#0a0b0a] transition-colors">
-                  <Mail size={20} />
-                </span>
-                <span>
-                  <span className="block text-xs text-gray-500">{JOIN.email.label}</span>
-                  <span className="font-semibold text-white">{JOIN.email.value}</span>
-                </span>
-              </a>
-            </div>
-
-            <div className="mt-8 flex items-center gap-4">
-              <div className="flex -space-x-3">
-                {IMAGES.authors.map((a, i) => (
-                  <img key={i} src={a} alt="" className="w-9 h-9 rounded-full border-2 border-[#101210] object-cover" />
-                ))}
-              </div>
-              <div className="flex items-center gap-1 text-[#c6f934]">
-                <Star size={15} fill="#c6f934" stroke="#c6f934" />
-                <span className="text-sm text-gray-300">4.9/5 · Over 4200 Reviews</span>
-              </div>
-            </div>
+    <section id="contact" data-testid="contact-section" className="dark-section section-pad overflow-hidden">
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <div className="absolute -bottom-40 -right-20 w-[600px] h-[500px] rounded-full bg-c-accent/20 blur-[150px]" />
+        <div className="hero-shape hero-shape-1 !top-[80px]" />
+        <div className="hero-shape hero-shape-2 !top-auto bottom-[80px]" />
+      </div>
+      <div className="container-c relative z-10 grid lg:grid-cols-2 gap-10 lg:gap-[60px] items-center">
+        <div className="reveal">
+          <span className="eyebrow">{JOIN.eyebrow}</span>
+          <h2 className="title-h2 mt-[10px] text-white" data-cursor="-opaque">
+            {JOIN.title}
+          </h2>
+          <div className="mt-8 lg:mt-10 rounded-[20px] lg:rounded-[30px] bg-white/10 backdrop-blur-xl p-5 lg:p-[30px] grid sm:grid-cols-2 gap-6">
+            <ContactItem Icon={Phone} item={JOIN.contact} testId="contact-phone" />
+            <ContactItem Icon={Mail} item={JOIN.email} testId="contact-email" />
           </div>
-
-          <form onSubmit={submit} className="relative z-10 reveal space-y-4">
-            <input
-              type="text"
-              placeholder="Your Name"
-              value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
-              className="w-full px-5 py-4 rounded-xl bg-[#0a0b0a] border border-white/10 text-white placeholder:text-gray-500 focus:outline-none focus:border-[#c6f934] transition-colors"
-            />
-            <input
-              type="email"
-              placeholder="Your Email"
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-              className="w-full px-5 py-4 rounded-xl bg-[#0a0b0a] border border-white/10 text-white placeholder:text-gray-500 focus:outline-none focus:border-[#c6f934] transition-colors"
-            />
-            <textarea
-              rows={4}
-              placeholder="Tell us about your project"
-              value={form.message}
-              onChange={(e) => setForm({ ...form, message: e.target.value })}
-              className="w-full px-5 py-4 rounded-xl bg-[#0a0b0a] border border-white/10 text-white placeholder:text-gray-500 focus:outline-none focus:border-[#c6f934] transition-colors resize-none"
-            />
-            <button type="submit" className="btn-lime w-full py-4 flex items-center justify-center gap-2">
-              Get a Free Consultation <ArrowUpRight size={18} />
-            </button>
-          </form>
+          <ul className="mt-8 flex flex-wrap items-center gap-2 font-semibold text-white">
+            <li>{ABOUT.rating}</li>
+            <li className="flex text-c-accent">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} size={16} fill="currentColor" stroke="currentColor" />
+              ))}
+            </li>
+            <li>{ABOUT.reviews}</li>
+          </ul>
         </div>
+
+        <form onSubmit={submit} className="rounded-[20px] lg:rounded-[30px] bg-white/10 backdrop-blur-xl p-5 lg:p-10 space-y-4 reveal" data-testid="contact-form" noValidate>
+          <input type="text" placeholder="Your Name" value={form.name} onChange={set("name")} className="form-control" data-testid="contact-name-input" />
+          <input type="email" placeholder="Your Email" value={form.email} onChange={set("email")} className="form-control" data-testid="contact-email-input" />
+          <textarea rows={4} placeholder="Tell us about your project" value={form.message} onChange={set("message")} className="form-control resize-none" data-testid="contact-message-input" />
+          <button type="submit" className="btn-default w-full" data-testid="contact-submit-button">
+            Get a Free Consultation
+          </button>
+        </form>
       </div>
     </section>
   );

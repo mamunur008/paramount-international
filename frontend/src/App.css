@@ -1,87 +1,346 @@
 .App {
   min-height: 100vh;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 .container-c {
-  max-width: 1280px;
+  width: 100%;
+  max-width: 1330px;
   margin: 0 auto;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
+  padding-left: 20px;
+  padding-right: 20px;
 }
-
-.section-pad {
-  padding-top: 7rem;
-  padding-bottom: 7rem;
-}
-
-@media (max-width: 768px) {
-  .section-pad {
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+@media (min-width: 1600px) {
+  .container-c {
+    max-width: 1500px;
   }
 }
 
+.section-pad {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+@media (max-width: 991px) {
+  .section-pad {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+}
+
+/* Codeio .bg-section.dark-section : rounded dark panel */
+.dark-section {
+  position: relative;
+  background-color: var(--c-dark);
+  border-radius: 30px;
+  margin-left: 20px;
+  margin-right: 20px;
+  color: #ffffff;
+}
+.dark-section h1,
+.dark-section h2,
+.dark-section h3,
+.dark-section h4 {
+  color: #ffffff;
+}
+@media (max-width: 1024px) {
+  .dark-section {
+    border-radius: 0;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+/* Section eyebrow pill (Codeio .section-title h3) */
 .eyebrow {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.8rem;
+  background: var(--c-eyebrow-bg);
+  border: 1px solid var(--c-divider);
+  border-radius: 100px;
+  font-size: 14px;
   font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: capitalize;
-  color: #c6f934;
+  line-height: 1;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgb(var(--c-text-rgb));
+  padding: 9px 15px 9px 30px;
 }
 .eyebrow::before {
   content: "";
-  width: 7px;
-  height: 7px;
-  border-radius: 999px;
-  background: #c6f934;
-  box-shadow: 0 0 10px #c6f934;
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgb(var(--c-accent-rgb));
+}
+.dark-section .eyebrow {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+.dark-section .eyebrow::before {
+  background: #ffffff;
 }
 
-.section-title {
-  font-weight: 700;
-  line-height: 1.12;
+.title-h1 {
+  font-size: clamp(30px, 5vw, 70px);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: rgb(var(--c-primary-rgb));
+}
+.title-h2 {
+  font-size: clamp(26px, 3.4vw, 50px);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  color: rgb(var(--c-primary-rgb));
+}
+.title-h3 {
+  font-size: clamp(22px, 2.2vw, 32px);
+  font-weight: 500;
   letter-spacing: -0.02em;
-  color: #f4f6f1;
-  font-size: clamp(1.9rem, 4vw, 3.1rem);
+  line-height: 1.25;
+  color: rgb(var(--c-primary-rgb));
+}
+.dark-section .title-h1,
+.dark-section .title-h2,
+.dark-section .title-h3 {
+  color: #ffffff;
 }
 
-.btn-lime {
-  background: #c6f934;
-  color: #0a0b0a;
+/* Codeio .btn-default */
+.btn-default {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(var(--c-accent-rgb));
+  border-radius: 10px;
+  font-size: 16px;
   font-weight: 600;
-  border-radius: 999px;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  line-height: 1.25;
+  text-transform: capitalize;
+  color: #ffffff;
+  padding: 15px 47px 15px 25px;
+  overflow: hidden;
+  border: none;
+  isolation: isolate;
+  transition: color 0.4s ease-in-out;
 }
-.btn-lime:hover {
-  background: #d4ff52;
-  box-shadow: 0 10px 30px rgba(198, 249, 52, 0.3);
-  transform: translateY(-2px);
+.btn-default::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 25px;
+  width: 12px;
+  height: 12px;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none'><path d='M1.5 10.5L10.5 1.5M10.5 1.5H3.5M10.5 1.5V8.5' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/></svg>") center / contain no-repeat;
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none'><path d='M1.5 10.5L10.5 1.5M10.5 1.5H3.5M10.5 1.5V8.5' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/></svg>") center / contain no-repeat;
+  transform: translateY(-50%);
+  transition: transform 0.4s ease-in-out;
+  z-index: 1;
+}
+.btn-default::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: auto;
+  width: 0;
+  height: 100%;
+  background: rgb(var(--c-primary-rgb));
+  transition: width 0.4s ease-in-out;
+  z-index: -1;
+}
+.btn-default:hover {
+  color: var(--c-btn-hover-text);
+}
+.btn-default:hover::before {
+  transform: translateY(-50%) rotate(45deg);
+}
+.btn-default:hover::after {
+  width: 100%;
+  left: 0;
+  right: auto;
+}
+.dark-section .btn-default::after {
+  background: #ffffff;
+}
+.dark-section .btn-default:hover {
+  color: #090915;
+}
+@media (max-width: 1024px) {
+  .btn-default {
+    padding: 12px 40px 12px 20px;
+  }
+  .btn-default::before {
+    width: 10px;
+    height: 10px;
+    right: 20px;
+  }
 }
 
-.btn-ghost {
+/* Codeio .readmore-btn */
+.readmore-btn {
+  position: relative;
+  display: inline-block;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: capitalize;
+  color: rgb(var(--c-primary-rgb));
+  padding-right: 22px;
+  transition: color 0.3s ease-in-out;
+}
+.readmore-btn::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none'><path d='M1.5 10.5L10.5 1.5M10.5 1.5H3.5M10.5 1.5V8.5' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/></svg>") center / contain no-repeat;
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none'><path d='M1.5 10.5L10.5 1.5M10.5 1.5H3.5M10.5 1.5V8.5' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/></svg>") center / contain no-repeat;
+  transition: transform 0.3s ease-in-out;
+}
+.readmore-btn:hover::before,
+a:hover > .readmore-btn::before,
+.group:hover .readmore-btn::before {
+  transform: rotate(45deg);
+}
+.dark-section .readmore-btn {
+  color: #ffffff;
+}
+
+/* Cards */
+.card-c {
+  background: var(--c-card);
+  border-radius: 30px;
+}
+.section-alt .card-c {
+  background: var(--c-card-alt);
+}
+@media (max-width: 1024px) {
+  .card-c {
+    border-radius: 20px;
+  }
+}
+
+/* Rising accent fill on hover (Codeio .services-item / .how-work-item) */
+.fill-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.fill-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 0;
+  background: rgb(var(--c-accent-rgb));
+  border-radius: 500px 500px 0 0;
+  transition: height 0.4s ease-in-out, border-radius 0.4s ease-in-out;
+  z-index: 0;
+}
+.fill-card:hover::before {
+  height: 100%;
+  border-radius: 0;
+}
+.fill-card:hover,
+.fill-card:hover * {
+  color: #ffffff;
+}
+
+/* Scrolling ticker text */
+.ticker-text {
+  font-size: clamp(30px, 5vw, 90px);
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: capitalize;
+  color: var(--c-card);
+  -webkit-text-stroke: 1px var(--c-ticker-stroke);
+}
+
+/* Inner page content */
+.entry p {
+  color: rgb(var(--c-text-rgb) / 0.85);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.entry p:last-child {
+  margin-bottom: 0;
+}
+.check-list li {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.5;
+  color: rgb(var(--c-text-rgb) / 0.9);
+  margin-bottom: 15px;
+}
+.check-list li svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: rgb(var(--c-accent-rgb));
+}
+.post-quote {
+  position: relative;
+  background: rgb(var(--c-accent-rgb));
+  border-radius: 30px;
+  padding: 30px 30px 30px 90px;
+  margin: 30px 0;
+  color: #ffffff;
+}
+.post-quote svg {
+  position: absolute;
+  left: 30px;
+  top: 30px;
+}
+.post-quote p {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0;
+}
+@media (max-width: 767px) {
+  .post-quote {
+    padding: 70px 20px 20px;
+    border-radius: 20px;
+  }
+  .post-quote svg {
+    left: 20px;
+    top: 20px;
+  }
+  .post-quote p {
+    font-size: 17px;
+  }
+}
+
+.form-control {
+  width: 100%;
+  font-size: 16px;
+  color: #ffffff;
   background: transparent;
-  color: #f4f6f1;
-  border: 1px solid rgba(255,255,255,0.14);
-  border-radius: 999px;
-  transition: all 0.25s ease;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 17px 20px;
+  outline: none;
+  transition: border-color 0.3s ease;
 }
-.btn-ghost:hover {
-  border-color: #c6f934;
-  color: #c6f934;
+.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.6);
 }
-
-.card-dark {
-  background: #101210;
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 1.25rem;
-  transition: transform 0.35s ease, border-color 0.35s ease, background 0.35s ease;
-}
-.card-dark:hover {
-  transform: translateY(-6px);
-  border-color: rgba(198, 249, 52, 0.4);
-  background: #141712;
+.form-control:focus {
+  border-color: rgb(var(--c-accent-rgb));
 }

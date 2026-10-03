@@ -1,75 +1,86 @@
 import React from "react";
-import { ArrowUpRight, Layers, ShieldCheck, Headphones } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Layers, ShieldCheck, Headphones } from "lucide-react";
 import { HERO, IMAGES } from "../mock";
 
-const benefitIcons = [Layers, ShieldCheck, Headphones];
+const icons = [Layers, ShieldCheck, Headphones];
+
+const BenefitItem = ({ b, Icon }) => (
+  <div className="flex gap-5 group">
+    <div className="flex-1">
+      <h3 className="text-xl font-medium text-white mb-3">{b.title}</h3>
+      <p className="text-white/80 m-0">{b.desc}</p>
+    </div>
+    <span className="w-[60px] h-[60px] shrink-0 rounded-2xl bg-c-accent/20 text-c-accent flex items-center justify-center transition-all duration-500 group-hover:[transform:rotateY(180deg)] group-hover:bg-c-accent group-hover:text-white">
+      <Icon size={28} />
+    </span>
+  </div>
+);
+
+const Bars = ({ heights }) => (
+  <div className="flex items-end gap-1.5 h-[70px]" aria-hidden="true">
+    {heights.map((h, i) => (
+      <span key={i} className="w-2.5 rounded-t-md bg-c-accent" style={{ height: `${h}%`, opacity: 0.3 + i * 0.1 }} />
+    ))}
+  </div>
+);
+
+const Counter = ({ stat, heights, reverse }) => (
+  <div className={`rounded-[20px] xl:rounded-[30px] bg-white/10 flex items-center justify-between gap-5 p-5 ${reverse ? "flex-row-reverse" : ""}`}>
+    <div>
+      <h3 className="text-[32px] font-medium text-white leading-none mb-2">{stat.value}</h3>
+      <p className="text-white/80 m-0 text-sm">{stat.label}</p>
+    </div>
+    <Bars heights={heights} />
+  </div>
+);
+
+const box = "rounded-[20px] lg:rounded-[30px] bg-white/10 backdrop-blur-xl p-5 lg:p-[30px] xl:p-10 flex flex-col justify-between gap-8 lg:gap-10 reveal";
 
 export default function Hero() {
+  const [b1, b2, b3] = HERO.benefits;
   return (
-    <section id="home" className="relative pt-36 pb-20 overflow-hidden">
-      {/* background accents */}
-      <div className="absolute inset-0 grid-dots opacity-60" />
-      <div className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-[#c6f934]/10 blur-[120px]" />
-      <div className="absolute top-20 -left-40 w-[400px] h-[400px] rounded-full bg-[#c6f934]/5 blur-[120px]" />
+    <section id="home" data-testid="hero-section" className="dark-section mt-0 lg:mt-5 pt-[150px] lg:pt-[250px] pb-[50px] lg:pb-[90px] overflow-hidden">
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[520px] rounded-full bg-c-accent/25 blur-[160px]" />
+        <div className="hero-shape hero-shape-1" />
+        <div className="hero-shape hero-shape-2" />
+      </div>
 
       <div className="container-c relative z-10">
-        <div className="max-w-4xl">
-          <span className="eyebrow mb-6">{HERO.welcome}</span>
-          <h1 className="section-title mt-5 !text-[clamp(2.4rem,6vw,4.6rem)] max-w-4xl">
-            Empowering our Business with{" "}
-            <span className="text-[#c6f934]">Smart IT Solutions</span>
-          </h1>
-          <p className="mt-7 text-lg text-gray-400 max-w-2xl leading-relaxed">
-            {HERO.desc}
-          </p>
-          <div className="mt-9 flex flex-wrap items-center gap-4">
-            <a href="#contact" className="btn-lime px-8 py-4 flex items-center gap-2">
-              {HERO.cta} <ArrowUpRight size={18} />
-            </a>
-            <div className="flex items-center gap-3">
-              <div className="flex -space-x-3">
-                {IMAGES.authors.map((a, i) => (
-                  <img
-                    key={i}
-                    src={a}
-                    alt="client"
-                    className="w-10 h-10 rounded-full border-2 border-[#0a0b0a] object-cover"
-                  />
-                ))}
-              </div>
-              <div className="text-sm">
-                <div className="font-semibold text-white">500+ Clients</div>
-                <div className="text-gray-500 text-xs">Trust our services</div>
-              </div>
+        <div className="max-w-[830px] mx-auto text-center">
+          <div className="inline-flex items-center gap-2.5 rounded-full bg-white/10 backdrop-blur-xl py-2 pr-4 pl-2 mb-5 reveal" data-testid="hero-welcome">
+            <div className="flex -space-x-1.5">
+              {IMAGES.authors.map((a, i) => (
+                <img key={i} src={a} alt="" className="w-5 h-5 rounded-full border border-black/40 object-cover" />
+              ))}
             </div>
+            <p className="m-0 text-[12px] sm:text-[13px] font-semibold tracking-[0.2em] uppercase text-white">{HERO.welcome}</p>
+          </div>
+          <h1 className="title-h1 text-white" data-cursor="-opaque" data-testid="hero-title">
+            {HERO.title}
+          </h1>
+          <p className="mt-5 max-w-[690px] mx-auto text-white/80">{HERO.desc}</p>
+          <div className="mt-8">
+            <Link to="/#contact" className="btn-default" data-testid="hero-cta">
+              {HERO.cta}
+            </Link>
           </div>
         </div>
 
-        {/* Benefit grid */}
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-5">
-          {HERO.benefits.map((b, i) => {
-            const Icon = benefitIcons[i];
-            const stat = HERO.stats[i];
-            return (
-              <div key={i} className="card-dark p-7 flex flex-col justify-between min-h-[200px]">
-                <div className="flex items-start justify-between">
-                  <span className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[#c6f934]/10 text-[#c6f934]">
-                    <Icon size={22} />
-                  </span>
-                  {stat && (
-                    <div className="text-right">
-                      <div className="text-2xl font-extrabold text-[#c6f934]">{stat.value}</div>
-                      <div className="text-[11px] text-gray-500">{stat.label}</div>
-                    </div>
-                  )}
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-white mt-6">{b.title}</h3>
-                  <p className="text-sm text-gray-400 mt-2 leading-relaxed">{b.desc}</p>
-                </div>
-              </div>
-            );
-          })}
+        <div className="mt-[50px] lg:mt-[100px] grid md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-[30px]">
+          <div className={box} data-testid="hero-benefit-1">
+            <BenefitItem b={b1} Icon={icons[0]} />
+            <Counter stat={HERO.stats[0]} heights={[35, 55, 45, 70, 60, 90, 80]} />
+          </div>
+          <div className={box} style={{ transitionDelay: "0.15s" }} data-testid="hero-benefit-2">
+            <Counter stat={HERO.stats[1]} heights={[40, 65, 50, 80, 70, 95, 85]} reverse />
+            <BenefitItem b={b2} Icon={icons[1]} />
+          </div>
+          <div className={`${box} !pb-0 md:col-span-2 lg:col-span-1 overflow-hidden`} style={{ transitionDelay: "0.3s" }} data-testid="hero-benefit-3">
+            <BenefitItem b={b3} Icon={icons[2]} />
+            <img src={IMAGES.heroVisual} alt="Support team at work" className="w-full h-[180px] object-cover rounded-t-[20px]" />
+          </div>
         </div>
       </div>
     </section>

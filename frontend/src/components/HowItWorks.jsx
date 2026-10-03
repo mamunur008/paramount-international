@@ -3,32 +3,38 @@ import { HOW_IT_WORKS, IMAGES } from "../mock";
 
 export default function HowItWorks() {
   return (
-    <section className="section-pad relative bg-[#0c0e0c]">
+    <section data-testid="how-it-works-section" className="dark-section section-pad">
       <div className="container-c">
-        <div className="grid lg:grid-cols-2 gap-10 items-end mb-14">
+        <div className="grid lg:grid-cols-2 gap-6 lg:items-end mb-10 lg:mb-20">
           <div className="reveal">
-            <span className="eyebrow mb-5">{HOW_IT_WORKS.eyebrow}</span>
-            <h2 className="section-title mt-5">{HOW_IT_WORKS.title}</h2>
+            <span className="eyebrow">{HOW_IT_WORKS.eyebrow}</span>
+            <h2 className="title-h2 mt-[10px] text-white" data-cursor="-opaque">
+              {HOW_IT_WORKS.title}
+            </h2>
           </div>
           <div className="reveal flex items-center gap-4 lg:justify-end">
             <div className="flex -space-x-3">
               {IMAGES.authors.map((a, i) => (
-                <img key={i} src={a} alt="" className="w-10 h-10 rounded-full border-2 border-[#0c0e0c] object-cover" />
+                <img key={i} src={a} alt="" className="w-10 h-10 rounded-full border border-white/30 object-cover" />
               ))}
             </div>
-            <p className="text-sm text-gray-400 max-w-[220px]">{HOW_IT_WORKS.note}</p>
+            <p className="m-0 text-white/80 max-w-[240px] leading-[1.5]">{HOW_IT_WORKS.note}</p>
           </div>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-[30px]">
           {HOW_IT_WORKS.steps.map((s, i) => (
-            <div key={i} className="card-dark p-7 reveal relative overflow-hidden">
-              <div className="text-6xl font-extrabold text-white/5 absolute top-3 right-4 select-none">{s.no}</div>
-              <div className="inline-flex items-center justify-center w-14 h-14 rounded-full border-2 border-[#c6f934] text-[#c6f934] font-bold text-lg">
-                {s.no}
+            <div
+              key={s.no}
+              data-testid={`step-${s.no}`}
+              className="fill-card rounded-[20px] lg:rounded-[30px] bg-white/10 backdrop-blur-xl p-[30px] xl:p-10 min-h-[300px] lg:min-h-[390px] flex flex-col justify-between reveal"
+              style={{ transitionDelay: `${i * 0.1}s` }}
+            >
+              <div className="relative z-10">
+                <h3 className="text-xl font-medium text-white/60 mb-[30px] transition-colors">{s.no}</h3>
+                <h3 className="text-xl font-medium text-white max-w-[200px]">{s.title}</h3>
               </div>
-              <h3 className="text-lg font-semibold text-white mt-6">{s.title}</h3>
-              <p className="text-sm text-gray-400 mt-3 leading-relaxed">{s.desc}</p>
+              <p className="relative z-10 m-0 mt-[30px] text-white/80">{s.desc}</p>
             </div>
           ))}
         </div>

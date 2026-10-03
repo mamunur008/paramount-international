@@ -1,39 +1,61 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Facebook, Twitter, Linkedin, Instagram, ArrowUpRight } from "lucide-react";
-import { FOOTER } from "../mock";
+import { FOOTER, BRAND } from "../mock";
+import { Logo } from "./Header";
 
-const socials = [Facebook, Twitter, Linkedin, Instagram];
+const socials = [
+  { Icon: Facebook, label: "Facebook" },
+  { Icon: Twitter, label: "Twitter" },
+  { Icon: Linkedin, label: "LinkedIn" },
+  { Icon: Instagram, label: "Instagram" },
+];
 
 export default function Footer() {
   return (
-    <footer className="relative bg-[#0a0b0a] border-t border-white/8 pt-16 pb-8">
+    <footer data-testid="site-footer" className="dark-section mb-0 lg:mb-5 pt-[50px] lg:pt-[100px] overflow-hidden">
       <div className="container-c">
-        <div className="grid lg:grid-cols-5 md:grid-cols-2 gap-10 pb-12 border-b border-white/8">
-          <div className="lg:col-span-2">
-            <a href="#home" className="flex items-center gap-2 mb-5">
-              <span className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-[#c6f934] text-[#0a0b0a] font-extrabold">{"</>"}</span>
-              <span className="text-2xl font-extrabold text-white">codeio</span>
-            </a>
-            <p className="text-gray-400 leading-relaxed max-w-sm">{FOOTER.desc}</p>
+        <div className="flex flex-wrap items-center justify-between gap-6 border-b border-white/10 pb-10 lg:pb-[60px] mb-10 lg:mb-[60px]">
+          <h2 className="title-h2 text-white max-w-[760px]" data-cursor="-opaque">
+            {FOOTER.headline}
+          </h2>
+          <Link
+            to="/#contact"
+            aria-label="Contact us"
+            data-testid="footer-cta"
+            className="w-[70px] h-[70px] lg:w-[100px] lg:h-[100px] shrink-0 rounded-full bg-c-accent text-white flex items-center justify-center hover:bg-white hover:text-[#090915] transition-colors group"
+          >
+            <ArrowUpRight size={34} className="transition-transform duration-300 group-hover:rotate-45" />
+          </Link>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.2fr] gap-10 lg:gap-[50px]">
+          <div>
+            <Logo className="text-white mb-5" />
+            <p className="text-white/80 max-w-[380px] m-0">{FOOTER.desc}</p>
+            <ul className="mt-6 space-y-3 text-white/85">
+              <li className="flex items-center gap-3"><Phone size={16} className="text-c-accent shrink-0" /><a href={BRAND.phoneHref} className="hover:text-c-accent transition-colors">{BRAND.phone}</a></li>
+              <li className="flex items-center gap-3"><Mail size={16} className="text-c-accent shrink-0" /><a href={`mailto:${BRAND.email}`} className="hover:text-c-accent transition-colors">{BRAND.email}</a></li>
+              <li className="flex items-start gap-3"><MapPin size={16} className="text-c-accent shrink-0 mt-1" /><span>{BRAND.address}</span></li>
+            </ul>
             <div className="flex gap-3 mt-6">
-              {socials.map((Icon, i) => (
-                <a key={i} href="#home" className="w-10 h-10 rounded-full border border-white/12 flex items-center justify-center text-gray-300 hover:bg-[#c6f934] hover:text-[#0a0b0a] hover:border-[#c6f934] transition-all">
+              {socials.map(({ Icon, label }) => (
+                <a key={label} href="/" aria-label={label} onClick={(e) => e.preventDefault()} className="w-10 h-10 rounded-[10px] bg-white/10 flex items-center justify-center text-white hover:bg-c-accent transition-colors" data-testid={`social-${label.toLowerCase()}`}>
                   <Icon size={17} />
                 </a>
               ))}
             </div>
           </div>
 
-          {FOOTER.columns.map((col, i) => (
-            <div key={i}>
-              <h4 className="font-semibold text-white mb-5">{col.title}</h4>
+          {FOOTER.columns.map((col) => (
+            <div key={col.title}>
+              <h3 className="text-xl font-medium text-white mb-5">{col.title}</h3>
               <ul className="space-y-3">
-                {col.links.map((link, j) => (
-                  <li key={j}>
-                    <a href="#home" className="text-sm text-gray-400 hover:text-[#c6f934] transition-colors inline-flex items-center gap-1 group">
-                      <ArrowUpRight size={13} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all" />
-                      {link}
-                    </a>
+                {col.links.map((l) => (
+                  <li key={l.label}>
+                    <Link to={l.href} className="text-white/80 hover:text-c-accent transition-colors leading-snug inline-block">
+                      {l.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -41,27 +63,12 @@ export default function Footer() {
           ))}
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 py-10 border-b border-white/8">
-          <div className="flex items-center gap-4">
-            <span className="w-11 h-11 rounded-full bg-[#c6f934]/10 text-[#c6f934] flex items-center justify-center"><Phone size={18} /></span>
-            <span className="text-sm"><span className="block text-gray-500 text-xs">Phone</span><span className="text-white font-medium">{FOOTER.contact.phone}</span></span>
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="w-11 h-11 rounded-full bg-[#c6f934]/10 text-[#c6f934] flex items-center justify-center"><Mail size={18} /></span>
-            <span className="text-sm"><span className="block text-gray-500 text-xs">Email</span><span className="text-white font-medium">{FOOTER.contact.email}</span></span>
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="w-11 h-11 rounded-full bg-[#c6f934]/10 text-[#c6f934] flex items-center justify-center shrink-0"><MapPin size={18} /></span>
-            <span className="text-sm"><span className="block text-gray-500 text-xs">Address</span><span className="text-white font-medium">{FOOTER.contact.address}</span></span>
-          </div>
-        </div>
-
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8">
-          <p className="text-sm text-gray-500">© 2025 Codeio. All rights reserved.</p>
-          <div className="flex gap-6 text-sm text-gray-500">
-            <a href="#home" className="hover:text-[#c6f934] transition-colors">Privacy Policy</a>
-            <a href="#home" className="hover:text-[#c6f934] transition-colors">Terms of Service</a>
-          </div>
+        <div className="mt-10 lg:mt-[60px] border-t border-white/10 py-[30px] flex flex-col md:flex-row items-center justify-between gap-3 text-sm text-white/70">
+          <p className="m-0">© 2026 {BRAND.name}. All rights reserved.</p>
+          <ul className="flex gap-5">
+            <li><Link to="/" className="hover:text-c-accent transition-colors">Privacy Policy</Link></li>
+            <li><Link to="/" className="hover:text-c-accent transition-colors">Terms of Service</Link></li>
+          </ul>
         </div>
       </div>
     </footer>

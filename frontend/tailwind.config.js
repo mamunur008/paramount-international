@@ -9,12 +9,27 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['"IBM Plex Sans"', 'sans-serif']
+      },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)'
       },
       colors: {
+        c: {
+          bg: 'rgb(var(--c-bg-rgb) / <alpha-value>)',
+          primary: 'rgb(var(--c-primary-rgb) / <alpha-value>)',
+          text: 'rgb(var(--c-text-rgb) / <alpha-value>)',
+          accent: 'rgb(var(--c-accent-rgb) / <alpha-value>)',
+          card: 'var(--c-card)',
+          cardalt: 'var(--c-card-alt)',
+          alt: 'var(--c-alt)',
+          dark: 'var(--c-dark)',
+          divider: 'var(--c-divider)',
+          ddivider: 'var(--c-ddivider)'
+        },
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {

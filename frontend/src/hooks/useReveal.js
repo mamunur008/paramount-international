@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
-// Adds .is-visible to any element with class .reveal when scrolled into view
-export default function useReveal() {
+// Adds .is-visible to .reveal elements as they scroll into view; re-runs when `dep` changes (route).
+export default function useReveal(dep) {
   useEffect(() => {
     const els = document.querySelectorAll(".reveal");
     const io = new IntersectionObserver(
@@ -13,9 +13,9 @@ export default function useReveal() {
           }
         });
       },
-      { threshold: 0.12 }
+      { threshold: 0.08 }
     );
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
-  }, []);
+  }, [dep]);
 }

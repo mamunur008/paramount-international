@@ -1,47 +1,64 @@
 import "./App.css";
-import React from "react";
+import React, { useEffect } from "react";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import useReveal from "./hooks/useReveal";
+import { ThemeProvider } from "./context/ThemeContext";
+import { CursorProvider } from "./context/CursorContext";
 import Header from "./components/Header";
-import Hero from "./components/Hero";
-import About from "./components/About";
-import Services from "./components/Services";
-import WhyChoose from "./components/WhyChoose";
-import HowItWorks from "./components/HowItWorks";
-import WhatWeDo from "./components/WhatWeDo";
-import Projects from "./components/Projects";
-import Features from "./components/Features";
-import Testimonials from "./components/Testimonials";
-import FAQ from "./components/FAQ";
-import Marquee from "./components/Marquee";
-import Join from "./components/Join";
-import Blog from "./components/Blog";
 import Footer from "./components/Footer";
+import CustomCursor from "./components/cursor/CustomCursor";
+import CursorPicker from "./components/cursor/CursorPicker";
+import Home from "./pages/Home";
+import ServiceDetail from "./pages/ServiceDetail";
+import ProjectDetail from "./pages/ProjectDetail";
+import BlogDetail from "./pages/BlogDetail";
+import NotFound from "./pages/NotFound";
 import { Toaster } from "./components/ui/toaster";
 
-function App() {
-  useReveal();
+function ScrollManager() {
+  const { pathname, hash } = useLocation();
+  useEffect(() => {
+    if (hash) {
+      const t = setTimeout(() => document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: "smooth", block: "start" }), 80);
+      return () => clearTimeout(t);
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [pathname, hash]);
+  return null;
+}
+
+function Layout() {
+  const { pathname } = useLocation();
+  useReveal(pathname);
   return (
     <div className="App">
+      <ScrollManager />
       <Header />
       <main>
-        <Hero />
-        <About />
-        <Services />
-        <WhyChoose />
-        <HowItWorks />
-        <WhatWeDo />
-        <Projects />
-        <Features />
-        <Testimonials />
-        <FAQ />
-        <Marquee />
-        <Join />
-        <Blog />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/services/:slug" element={<ServiceDetail />} />
+          <Route path="/projects/:slug" element={<ProjectDetail />} />
+          <Route path="/blog/:slug" element={<BlogDetail />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </main>
       <Footer />
+      <CursorPicker />
+      <CustomCursor />
       <Toaster />
     </div>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <ThemeProvider>
+      <CursorProvider>
+        <BrowserRouter>
+          <Layout />
+        </BrowserRouter>
+      </CursorProvider>
+    </ThemeProvider>
+  );
+}

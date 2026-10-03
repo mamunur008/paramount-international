@@ -1,35 +1,41 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import * as Icons from "lucide-react";
-import { ArrowUpRight } from "lucide-react";
 import { SERVICES } from "../mock";
 
 export default function Services() {
   return (
-    <section id="services" className="section-pad relative">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#c6f934]/5 blur-[150px] pointer-events-none" />
-      <div className="container-c relative z-10">
-        <div className="text-center max-w-3xl mx-auto reveal">
-          <span className="eyebrow mb-5 justify-center">{SERVICES.eyebrow}</span>
-          <h2 className="section-title mt-5">{SERVICES.title}</h2>
+    <section id="services" data-testid="services-section" className="section-pad section-alt bg-c-alt">
+      <div className="container-c">
+        <div className="max-w-[1000px] mx-auto text-center reveal mb-10 lg:mb-20">
+          <span className="eyebrow">{SERVICES.eyebrow}</span>
+          <h2 className="title-h2 mt-[10px]" data-cursor="-opaque">
+            {SERVICES.title}
+          </h2>
         </div>
 
-        <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-[30px]">
           {SERVICES.items.map((s, i) => {
             const Icon = Icons[s.icon] || Icons.Box;
             return (
-              <div key={i} className="card-dark p-7 group reveal flex flex-col">
-                <span className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-[#c6f934]/10 text-[#c6f934] group-hover:bg-[#c6f934] group-hover:text-[#0a0b0a] transition-colors duration-300">
-                  <Icon size={26} />
-                </span>
-                <h3 className="text-xl font-semibold text-white mt-6">{s.title}</h3>
-                <p className="text-sm text-gray-400 mt-3 leading-relaxed flex-1">{s.desc}</p>
-                <a
-                  href="#contact"
-                  className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[#c6f934] hover:gap-2.5 transition-all"
-                >
-                  Learn More <ArrowUpRight size={16} />
-                </a>
-              </div>
+              <Link
+                to={`/services/${s.slug}`}
+                key={s.slug}
+                data-testid={`service-card-${s.slug}`}
+                className="fill-card card-c p-[30px] xl:p-[50px] min-h-[350px] lg:min-h-[435px] flex flex-col justify-between reveal group"
+                style={{ transitionDelay: `${i * 0.1}s` }}
+              >
+                <div className="relative z-10">
+                  <span className="w-[60px] h-[60px] rounded-2xl bg-c-accent/10 text-c-accent flex items-center justify-center mb-[30px] transition-colors duration-300 group-hover:bg-white/15">
+                    <Icon size={28} />
+                  </span>
+                  <h3 className="text-xl font-medium text-c-primary transition-colors duration-300">{s.title}</h3>
+                </div>
+                <div className="relative z-10 border-t border-c-divider mt-[30px] pt-[30px] group-hover:border-white/20 transition-colors duration-300">
+                  <p className="m-0 mb-[30px] text-c-text/80 transition-colors duration-300">{s.desc}</p>
+                  <span className="readmore-btn">read more</span>
+                </div>
+              </Link>
             );
           })}
         </div>
