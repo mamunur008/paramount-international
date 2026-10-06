@@ -29,7 +29,8 @@
 .company-mobile-menu nav > a { font-size: 21px; padding-block: 13px; }
 .company-mobile-menu .mobile-email { font-size: 13px; }
 .company-hero { position: relative; isolation: isolate; overflow: hidden; padding: 238px 0 0; }
-.company-hero-art { position: absolute; z-index: -1; pointer-events: none; top: 125px; right: -310px; width: 1220px; max-width: none; height: 745px; object-fit: contain; opacity: .58; mask-image: linear-gradient(to right, transparent, #000 24%); }
+/* Keep the artwork aligned with the centered content at every desktop width. */
+.company-hero-art { position: absolute; z-index: -1; pointer-events: none; top: 125px; right: max(-390px, calc((100% - var(--content-max-width)) / 2 - 390px)); width: 1220px; max-width: none; height: 745px; object-fit: contain; opacity: .58; mask-image: linear-gradient(to right, transparent, #000 24%, #000 76%, transparent); }
 [data-theme="light"] .company-hero-art { opacity: .4; }
 .company-hero > .container-c { position: relative; }
 .company-hero-grid { display: grid; grid-template-columns: 1.05fr 1fr; align-items: center; gap: 55px; padding-bottom: 66px; }
