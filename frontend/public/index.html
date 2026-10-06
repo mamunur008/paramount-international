@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#07090c" />
+    <meta
+      name="description"
+      content="Paramount International builds custom software, enterprise platforms and connected business tools from Dhaka, Bangladesh. Explore our products, work and team."
+    />
+    <link rel="canonical" href="https://paramountint.com/" />
+    <link rel="icon" type="image/svg+xml" href="%PUBLIC_URL%/favicon.svg" />
+    <link rel="alternate icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Paramount International — Business software, thoughtfully built"
+    />
+    <meta
+      property="og:description"
+      content="Enterprise platforms, custom applications and a team that stays with the product. Based in Dhaka, Bangladesh."
+    />
+    <meta property="og:url" content="https://paramountint.com/" />
+    <meta
+      property="og:image"
+      content="https://paramountint.com/assets/brand/paramount-international-logo.png"
+    />
+    <title>
+      Business software, thoughtfully built | Paramount International
+    </title>
+    <script>
+      (function () {
+        var theme;
+        try {
+          theme = localStorage.getItem("pi-theme");
+        } catch (e) {}
+        if (theme !== "light" && theme !== "dark")
+          theme = matchMedia("(prefers-color-scheme: light)").matches
+            ? "light"
+            : "dark";
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+  </head>
+  <body>
+    <noscript
+      >This website needs JavaScript for its interactive pages. Contact
+      Paramount International at anam4mba@gmail.com or +880 1717
+      022299.</noscript
+    >
+    <!-- Netlify discovers this static form at deploy time. Keep names in sync with ContactSection. -->
+    <form
+      name="contact"
+      method="POST"
+      data-netlify="true"
+      data-netlify-honeypot="bot-field"
+      hidden
+    >
+      <input type="hidden" name="form-name" value="contact" />
+      <input name="bot-field" />
+      <input name="name" />
+      <input name="organization" />
+      <input name="email" type="email" />
+      <input name="phone" type="tel" />
+      <select name="service">
+        <option>Custom software development</option>
+        <option>Enterprise platform / ERP</option>
+        <option>Employee management</option>
+        <option>Product engineering</option>
+        <option>Cloud delivery &amp; support</option>
+        <option>Something else</option>
+      </select>
+      <textarea name="message"></textarea>
+    </form>
+    <div id="root"></div>
+  </body>
+</html>
